@@ -2,264 +2,228 @@
 <html lang="az">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bizim Hekayəmiz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omer & Roksana ❤️</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        body, html {
-            width: 100%;
-            height: 100%;
-            overflow-x: hidden;
-            background-color: #0b0b0b;
+        body {
+            background: linear-gradient(135deg, #1f1c2c, #928dab);
             color: #fff;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .video-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
-            z-index: -2;
-            filter: brightness(0.3) contrast(1.1);
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: radial-gradient(circle, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.9) 100%);
-            z-index: -1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
         }
 
         .container {
             width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 30px 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        header {
+            max-width: 400px;
             text-align: center;
-            margin-bottom: 40px;
-            opacity: 0;
-            transform: translateY(-20px);
-            animation: fadeInDown 1.2s forwards 0.3s;
+            z-index: 2;
         }
 
-        header h1 {
-            font-size: 1.5rem;
-            letter-spacing: 1.5px;
-            font-weight: 400;
-            margin-bottom: 8px;
-            color: #f3f3f3;
-        }
-
-        header p {
-            font-size: 0.9rem;
-            color: #aaa;
-            font-style: italic;
-        }
-
-        .chapter-card {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 14px;
-            padding: 22px 18px;
-            margin-bottom: 24px;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        }
-
-        .chapter-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Şəkil stili - telefonda səliqəli və uyğun görünməsi üçün */
-        .chapter-img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .chapter-number {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 2.5px;
-            color: #ff6b81;
-            margin-bottom: 6px;
-            font-weight: 600;
-        }
-
-        .chapter-title {
-            font-size: 1.2rem;
+        h1 {
+            font-size: 24px;
             margin-bottom: 10px;
-            font-weight: 500;
+            color: #ff6b81;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #ddd;
+            margin-bottom: 25px;
+        }
+
+        /* Sayğac qutusu (Titrəmənin qarşısını almaq üçün sabit ölçü və şrift) */
+        .counter-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .counter-box h3 {
+            font-size: 15px;
+            margin-bottom: 8px;
+            color: #ff9ff3;
+        }
+
+        #time-result {
+            font-size: 15px;
+            font-weight: bold;
             color: #fff;
+            font-variant-numeric: tabular-nums; /* Rəqəmlərin enini sabit saxlayır ki, titrəmə olsun */
         }
 
-        .chapter-text {
-            font-size: 0.95rem;
-            line-height: 1.55;
-            color: #d1d1d1;
+        /* Kartlar */
+        .card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        .finale-card {
-            width: 100%;
-            background: linear-gradient(135deg, rgba(255, 107, 129, 0.2), rgba(0, 0, 0, 0.7));
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 107, 129, 0.4);
-            border-radius: 16px;
-            padding: 28px 20px;
-            margin-top: 10px;
-            margin-bottom: 40px;
-            text-align: center;
-            opacity: 0;
-            transform: scale(0.95);
-            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 15px 35px rgba(255, 107, 129, 0.2);
+        .card p {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #f1f2f6;
         }
 
-        .finale-card.visible {
-            opacity: 1;
-            transform: scale(1);
+        /* Sual hissəsi */
+        .question-section {
+            margin-top: 30px;
+            position: relative;
+            height: 150px;
         }
 
-        .finale-title {
-            font-size: 1.35rem;
-            margin-bottom: 15px;
-            color: #fff;
-            font-weight: 500;
-            letter-spacing: 0.5px;
+        .question-section h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
         }
 
-        .finale-text {
-            font-size: 1rem;
-            line-height: 1.7;
-            color: #f1f1f1;
-            font-style: italic;
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
         }
 
-        @keyframes fadeInDown {
-            to {
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        #yes-btn {
+            background-color: #ff4757;
+            color: white;
+            box-shadow: 0 4px 10px rgba(255, 71, 87, 0.4);
+        }
+
+        #no-btn {
+            background-color: #747d8c;
+            color: white;
+            position: absolute;
+            left: 55%;
+        }
+
+        /* Ürək animasiyası */
+        .heart {
+            position: absolute;
+            color: rgba(255, 107, 129, 0.6);
+            font-size: 20px;
+            animation: flyUp 4s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes flyUp {
+            0% {
+                transform: translateY(100vh) scale(0.5);
                 opacity: 1;
-                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.2);
+                opacity: 0;
             }
         }
     </style>
 </head>
 <body>
 
-    <video class="video-bg" autoplay muted loop playsinline>
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-silhouette-of-a-couple-at-sunset-41662-large.mp4" type="video/mp4">
-    </video>
-    <div class="overlay"></div>
-
     <div class="container">
-        <header>
-            <h1>Bizimlə Başlayan Hekayə</h1>
-            <p>1000 səhifəlik kitabımızın hələ ilk cümlələrindəyik...</p>
-        </header>
+        <h1>Omer & Roksana ❤️</h1>
+        <div class="subtitle">Her şey o gözel mesajla başladı...</div>
 
-        <!-- 1-ci Mərhələ -->
-        <div class="chapter-card">
-            <img src="bir.avif" alt="Seyfe 1" class="chapter-img">
-            <div class="chapter-number">Seyfe I</div>
-            <div class="chapter-title">Mene ilk yazdığın o an</div>
-            <div class="chapter-text">
-                Hər şey senin mene mesaj gonderdiyin o günden başlasa da, o gün menim həyatımın ən böyük çevrilişi oldu. Her xatırladıgımda gulurem sen mene ilk yazdıgda ele bilmişdimki fake hesapdi mene yazan axaxaxaxaxa
-            </div>
+        <!-- Sayğac -->
+        <div class="counter-box">
+            <h3>İlk dəfə yazdığın andan keçən zaman:</h3>
+            <div id="time-result">Yüklənir...</div>
         </div>
 
-        <!-- 2-ci Mərhələ -->
-        <div class="chapter-card">
-            <img src="sekil2.jpg" alt="Seyfe 2" class="chapter-img">
-            <div class="chapter-number">Seyfe II</div>
-            <div class="chapter-title">Gözlerine vuruldugum o an</div>
-            <div class="chapter-text">
-                Klaviaturaya ilk dəfə barmaq basıb sənə "Seni sevirem" yazdığım o an... Ürəyimdəki o qəribə həyəcan hələ də yadımdadır hele senin hisslerinden danışmıram az qala sevincinden kosmosa uçacaqdın. Sanki illərdir tanıdığım biri ilə danışırdım.
-            </div>
+        <!-- Xatirə / Mesaj kartı -->
+        <div class="card">
+            <p>26 Avqust saat 13:53... O gün heyatımın en gözel anlarından biri oldu. Yaxşı ki varımsan yaxşıki heyatımdasan devuçkam menimm</p>
         </div>
 
-        <!-- 3-cü Mərhələ -->
-        <div class="chapter-card">
-            <img src="sekil3.jpg" alt="Seyfe 3" class="chapter-img">
-            <div class="chapter-number">Seyfe III</div>
-            <div class="chapter-title">Sevgili Olduğumuz O Gün</div>
-            <div class="chapter-text">
-                Təqvimdə xüsusi bir işarə qoyduğumuz, dünyada mənim üçün sadəcə sənin var olduğun o unudulmaz gün. Həmin an hər şey tam və mükəmməl oldu amma birbirimize o qeder yaxın idik ki heç özümüzde bilmedik ne ara sevgili oldug. ve birbirimize sonsuza qeder tutacagimiz bir soz verdik. sonsuza kimi birbirimize sadiq qalma sözü.
-            </div>
-        </div>
-
-        <!-- 4-cü Mərhələ -->
-        <div class="chapter-card">
-            <img src="sekil4.jpg" alt="Seyfe 4" class="chapter-img">
-            <div class="chapter-number">Seyfe IV</div>
-            <div class="chapter-title">Kiçik İncikliklər və Dəyərli Anlar</div>
-            <div class="chapter-text">
-                Arada olan o şirin küsmələr, kiçik zarafatlar belə münasibətimizin nə qədər canlı və gerçək olduğunu göstərdi. Çünki Roksanama hər inciklikden sonra daha çox bağlanıram. Bezende fikirleşiremki kaş yanımda olardın ve senin gönlünü mesajlarla yox seni qucaqlayaraq alardım devuçkam.
-            </div>
-        </div>
-
-        <!-- 5-ci Mərhələ -->
-        <div class="chapter-card">
-            <img src="bes.avif" alt="Seyfe 5" class="chapter-img">
-            <div class="chapter-number">Seyfe V</div>
-            <div class="chapter-title">İndi və Həmişə</div>
-            <div class="chapter-text">
-                Bu gün isə burdayıq sevgilim. Hələ boyuk bir sevgi kitabının ilk cumlelerini yaşayırıq, gedəcək çox yollarımız və yaşayacağımız saysız xoşbəxt anlarımız var. amma menim tek bir arzum var odaki bir gun sene govuşmag ve senin o gozal ellerini tuta bilmekdir roksanam.
-            </div>
-        </div>
-
-        <!-- Nəticə və Xüsusi Sözlər -->
-        <div class="finale-card">
-            <div class="finale-title">Sonsuzluğa Doğru...</div>
-            <div class="finale-text">
-                <!-- Buraya öz xüsusi sözlərini yazacaqsan -->
-                "Bəzən sadəcə bir stori baxışı və ya balaca bir inciklik insanı anlamaq üçün bəhanə olur. Bil ki, ağlım da, ürəyim də hər zaman səndədir. Gəl bu kitabı birlikdə, ən gözəl şəkildə yazaq..."
+        <!-- Sual və Düymələr -->
+        <div class="question-section">
+            <h2>Məni çox sevirsen??</h2>
+            <div class="btn-group" id="btn-group">
+                <button id="yes-btn" onclick="sayYes()">Da</button>
+                <button id="no-btn" onmouseover="moveButton()" ontouchstart="moveButton()" onclick="moveButton()">Nyet</button>
             </div>
         </div>
     </div>
 
     <script>
-        const observerOptions = {
-            threshold: 0.1
-        };
+        const startDate = new Date("2026-08-26T13:53:00");
 
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
+        function updateCounter() {
+            const now = new Date();
+            const diff = now - startDate;
 
-        document.querySelectorAll('.chapter-card, .finale-card').forEach(card => {
-            observer.observe(card);
-        });
+            if (diff < 0) {
+                document.getElementById("time-result").innerText = "Tarix səhvdir və ya gələcəkdir!";
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / 1000 / 60) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById("time-result").innerText = `${days} gün, ${hours} saat, ${minutes} dəqiqə, ${seconds} saniyə`;
+        }
+
+        setInterval(updateCounter, 1000);
+        updateCounter();
+
+        // "Yox" düyməsinin qaçması
+        function moveButton() {
+            const noBtn = document.getElementById("no-btn");
+            const x = Math.random() * 200 - 100;
+            const y = Math.random() * 100 - 50;
+            noBtn.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        // "Hə" düyməsinə basanda
+        function sayYes() {
+            alert("Da'ya basan ellerine gurban olum Roksanam, Meni dünyanın en xoşbext insanı etdiyin üçün teşekkur edirem heyatımın menası");
+        }
+
+        // Arxa fonda uçuşan ürəklər
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 4000);
+        }
+
+        setInterval(createHeart, 600);
     </script>
 </body>
 </html>
